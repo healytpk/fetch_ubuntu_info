@@ -1,4 +1,4 @@
-name: wxGTK_x86_64
+name: Linux_x86_64
 
 on:
   push:
@@ -34,4 +34,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: artifacts_wxGTK_Linux_x86_64
-        path: build/ubuntu_fetcher
+        path: build
