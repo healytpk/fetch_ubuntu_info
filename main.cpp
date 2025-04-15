@@ -1,8 +1,8 @@
 #include <cstdio>               // puts
-#include <cstdlib>              // EXIT_FAILURE
+#include <cstdlib>              // exit, EXIT_FAILURE
+#include <cstring>              // strcmp
 #include <iostream>             // cout, cerr, endl
 #include <string>               // string
-#include <getopt.h>             // getopt_long
 #include "distro_fetcher.hpp"   // DistroFetcher
 
 using std::string;
@@ -10,9 +10,11 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-void ShowHelp(void) noexcept
+void ShowHelp(char const *const argv0, int const exit_code) noexcept
 {
-    std::puts("Usage: ubuntu_fetcher [options]\n"
+    
+    std::printf(
+              "Usage: %s [options]\n"
               "Options:\n"
               "  --help, -h                Show this help message\n"
               "  --list-releases           List all supported Ubuntu releases\n"
@@ -20,65 +22,46 @@ void ShowHelp(void) noexcept
               "  --hash <release date>     Get the SHA256 hash digest of the 'disk1.img' file for a specific release\n"
               "\n"
               "Examples:\n"
-              "    ubuntu_fetcher --list-releases\n"
-              "    ubuntu_fetcher --hash 2025-04-03\n");
+              "    %s --list-releases\n"
+              "    %s --hash 2025-04-03\n", argv0, argv0, argv0);
+
+    std::exit(exit_code);
 }
+
+constexpr char url[] = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
 
 int main(int const argc, char **const argv)
 {
-    static constexpr struct option long_options[] = {
-        {"help",          no_argument,       nullptr, 'h'},
-        {"list-releases", no_argument,       nullptr,  0 },
-        {"current-lts",   no_argument,       nullptr,  1 },
-        {"hash",          required_argument, nullptr,  2 },
-        {nullptr, 0, nullptr, 0 }
-    };
+    using std::strcmp;
 
-    DistroFetcher fetcher("https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json");
+    DistroFetcher fetcher(url);
 
-    int option_index = 0, c = 0;
-    while ( -1 != (c = getopt_long(argc, argv, "h", long_options, &option_index)) )
+    if ( (3 == argc) && (0 == strcmp(argv[1], "--hash")) )
     {
-        switch ( c )
+        string const digest = fetcher.GetDisk1Sha256(argv[2]);
+        cout << "Hash SHA256 digest of file 'disk1.img' for release date " << argv[2] << ": " << digest << endl;
+        return (digest == "unknown") ? EXIT_FAILURE : 0;
+    }
+    else if ( 2 == argc )
+    {
+        if ( (0==strcmp(argv[1], "--help")) || (0==strcmp(argv[1], "-h")) )
         {
-        case 'h':
-            ShowHelp();
-            return 0;
-
-        case 0:  // --list-releases
-            {
-                cout << "Date           Version   Codename\n"
-                        "------------------------------------------\n";
-                auto const releases = fetcher.GetSupportedReleases();
-                for ( auto const &r : releases ) cout << r << '\n';
-                return 0;
-            }
-
-        case 1:  // --current-lts
-            {
-                cout << "Current Ubuntu LTS version: " << fetcher.GetCurrentLTSVersion() << endl;
-                return 0;
-            }
-
-        case 2:  // --hash
-            if ( nullptr != optarg )
-            {
-                string const digest = fetcher.GetDisk1Sha256(optarg);
-                cout << "Hash SHA256 digest of file 'disk1.img' for release date " << optarg << ": " << digest << endl;
-                return 0;
-            }
-            else
-            {
-                cerr << "Error: Please provide a release name for --hash option.\n";
-                return EXIT_FAILURE;
-            }
-
-        default:
-            ShowHelp();
-            return EXIT_FAILURE;
+            ShowHelp(argv[0], 0);
         }
+        else if ( 0 == strcmp(argv[1], "--list-releases") )
+        {
+            cout << "Date           Version   Codename\n"
+                    "------------------------------------------\n";
+            auto const releases = fetcher.GetSupportedReleases();
+            for ( auto const &r : releases ) cout << r << '\n';
+            return 0;
+        }
+        else if ( 0 == strcmp(argv[1], "--current-lts") )
+        {
+            cout << "Current Ubuntu LTS version: " << fetcher.GetCurrentLTSVersion() << endl;
+            return 0;
+        }   
     }
 
-    ShowHelp();
-    return EXIT_FAILURE;
+    ShowHelp(argv[0], EXIT_FAILURE);
 }

@@ -4,8 +4,6 @@
 #include <string>               // string
 #include <string_view>          // string_view
 #include <vector>               // vector
-#include <curl/curl.h>          // CURL
-#include <json-c/json.h>        // json_object, json_tokener
 
 class IDistroFetcher {
 public:

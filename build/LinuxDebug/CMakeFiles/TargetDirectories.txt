@@ -1,0 +1,14 @@
+/opt/gitdir/healytpk/dynamo/build/LinuxDebug/CMakeFiles/edit_cache.dir
+/opt/gitdir/healytpk/dynamo/build/LinuxDebug/CMakeFiles/rebuild_cache.dir
+/opt/gitdir/healytpk/dynamo/binary_hexer/Linux/Debug/CMakeFiles/binary_hexer.dir
+/opt/gitdir/healytpk/dynamo/binary_hexer/Linux/Debug/CMakeFiles/edit_cache.dir
+/opt/gitdir/healytpk/dynamo/binary_hexer/Linux/Debug/CMakeFiles/rebuild_cache.dir
+/opt/gitdir/healytpk/dynamo/wxModularCore/Linux/Debug/CMakeFiles/wxModularCore.dir
+/opt/gitdir/healytpk/dynamo/wxModularCore/Linux/Debug/CMakeFiles/edit_cache.dir
+/opt/gitdir/healytpk/dynamo/wxModularCore/Linux/Debug/CMakeFiles/rebuild_cache.dir
+/opt/gitdir/healytpk/dynamo/plugin_arp/Linux/Debug/CMakeFiles/plugin_arp.dir
+/opt/gitdir/healytpk/dynamo/plugin_arp/Linux/Debug/CMakeFiles/edit_cache.dir
+/opt/gitdir/healytpk/dynamo/plugin_arp/Linux/Debug/CMakeFiles/rebuild_cache.dir
+/opt/gitdir/healytpk/dynamo/main_program/Linux/Debug/CMakeFiles/main_program.dir
+/opt/gitdir/healytpk/dynamo/main_program/Linux/Debug/CMakeFiles/edit_cache.dir
+/opt/gitdir/healytpk/dynamo/main_program/Linux/Debug/CMakeFiles/rebuild_cache.dir
