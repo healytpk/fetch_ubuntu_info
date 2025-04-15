@@ -33,7 +33,7 @@ using std::string;
 using std::vector;
 
 template<typename T>  // C++17 doesn't have 'requires'
-constexpr string Capitalize(T &&arg) noexcept(false)
+/*constexpr*/ string Capitalize(T &&arg) noexcept(false)
 {
     assert( false == arg.empty() );
     string result( std::forward<T>(arg) );
@@ -42,7 +42,7 @@ constexpr string Capitalize(T &&arg) noexcept(false)
 }
 
 template<typename T>  // C++17 doesn't have 'requires'
-constexpr string SizeToCol(T &&arg, unsigned len) noexcept(false)
+/*constexpr*/ string SizeToCol(T &&arg, unsigned len) noexcept(false)
 {
     // allow an empty string
     string result( std::forward<T>(arg) );
