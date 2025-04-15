@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(UbuntuImageFetcher)
+project(ubuntu_fetcher)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -13,7 +13,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSON_C REQUIRED json-c)
 
 # Define the executable and source files
-add_executable(ubuntu__fetcher
+add_executable(ubuntu_fetcher
     main.cpp
     distro_fetcher.cpp
 )
