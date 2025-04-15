@@ -33,5 +33,5 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: artifacts_wxGTK_Linux_x86_64
-        path: build
+        name: artifacts_Linux_x86_64
+        path: build/LinuxRelease/ubuntu_fetcher
