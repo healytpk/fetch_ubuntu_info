@@ -7,9 +7,9 @@ name:  wxMSW_x86_32_MSBuild
 
 on:
   push:
-    branches: [ "master" ]
+    branches: '*'
   pull_request:
-    branches: [ "master" ]
+    branches: '*'
 
 env:
   BUILD_CONFIGURATION: Debug
