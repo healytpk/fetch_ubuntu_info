@@ -14,13 +14,12 @@
 #include <type_traits>          // is_same, remove_reference
 #include <utility>              // forward
 #include <vector>               // vector
+#include <curl/curl.h>          // curl_easy_init
+#include "Auto.h"               // The 'Auto' macro
 
 #if 0
-#include <curl/curl.h>          // curl_easy_init
-#include <json-c/json.h>        // json_object
+#   include <json-c/json.h>        // json_object
 #endif
-
-#include "Auto.h"               // The 'Auto' macro
 
 #if 0
 #include <iostream> // --------------------------------------- Remove this
@@ -28,6 +27,7 @@ using std::cout;
 using std::endl;
 #endif
 
+using std::runtime_error;
 using std::size_t;
 using std::string;
 using std::vector;
@@ -67,9 +67,8 @@ static size_t WriteCallback(char const *const ptr,
 
 string DistroFetcher::FetchJson(void) const noexcept(false)
 {
-#if 0
     CURL *const curl = curl_easy_init();
-    if ( nullptr == curl ) throw std::runtime_error("Failed to initialize Curl library for making HTTP requests");
+    if ( nullptr == curl ) throw runtime_error("Failed to initialize Curl library for making HTTP requests");
     Auto( curl_easy_cleanup(curl) );
 
     string result;
@@ -84,10 +83,7 @@ string DistroFetcher::FetchJson(void) const noexcept(false)
         std::this_thread::sleep_for( std::chrono::seconds(i) );
     }
 
-    throw std::runtime_error("Failed to fetch JSON");
-#else
-    return {};
-#endif
+    throw runtime_error("Failed to fetch JSON");
 }
 
 static bool HasDateExpired(char const *const str_date) noexcept
@@ -97,24 +93,24 @@ static bool HasDateExpired(char const *const str_date) noexcept
     try
     {
         std::tm tm = {};
+
+        // The next line checks that it's in the correct format
+        // and also populates the 'tm' struct
         if ( (std::stringstream(str_date) >> std::get_time(&tm, "%Y-%m-%d")).fail() ) return true;
 
         tm.tm_hour = 0;
         tm.tm_min  = 0;
         tm.tm_sec  = 0;
 
-        time_t input_time = std::mktime(&tm),
-               now        = std::time(nullptr);
+        time_t const now_time = std::time(nullptr);
 
-        std::tm *const now_tm = std::localtime(&now);
+        std::tm *const now_tm = std::localtime(&now_time);
 
         now_tm->tm_hour = 0;
         now_tm->tm_min  = 0;
         now_tm->tm_sec  = 0;
 
-        time_t current_midnight = std::mktime(now_tm);
-
-        return input_time < current_midnight;
+        return std::mktime(&tm) < std::mktime(now_tm);
     }
     catch(...){}
 
@@ -127,11 +123,11 @@ vector<string> DistroFetcher::GetSupportedReleases(unsigned const max_count) con
     string const json_text = FetchJson();
 
     json_object *const root = json_tokener_parse(json_text.c_str());
-    if ( nullptr == root ) throw std::runtime_error("Failed to parse JSON");
+    if ( nullptr == root ) throw runtime_error("Failed to parse JSON");
     Auto( json_object_put(root) );
 
     json_object *products = nullptr;
-    if ( false == json_object_object_get_ex(root, "products", &products) ) throw std::runtime_error("Missing 'products' in JSON");
+    if ( false == json_object_object_get_ex(root, "products", &products) ) throw runtime_error("Missing 'products' in JSON");
 
     vector<string> releases;
 
@@ -248,11 +244,11 @@ string DistroFetcher::GetDisk1Sha256(string_view const date) const noexcept(fals
     string const json_text = FetchJson();
 
     json_object *const root = json_tokener_parse(json_text.c_str());
-    if ( nullptr == root ) throw std::runtime_error("Failed to parse JSON");
+    if ( nullptr == root ) throw runtime_error("Failed to parse JSON");
     Auto( json_object_put(root) );
 
     json_object *products = nullptr;
-    if ( false == json_object_object_get_ex(root, "products", &products) ) throw std::runtime_error("Missing 'products' in JSON");
+    if ( false == json_object_object_get_ex(root, "products", &products) ) throw runtime_error("Missing 'products' in JSON");
 
     json_object_object_foreach(products, _, val)
     {
