@@ -35,7 +35,16 @@ jobs:
       run: |
         cd build\Win && msbuild ubuntu_fetcher.sln && cd ..\..
 
+    - name: Test the program and collect output
+      run: |
+        cd build\Win\Debug && ubuntu_fetcher.exe --list-releases > sample_output.txt && cd ..\..\..
+
     - uses: actions/upload-artifact@v4
       with:
         name: MSWindows_executable
-        path: build
+        path: build/Win/Debug/ubuntu_fetcher.exe
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: MSWindows_sample_output
+        path: build/Win/Debug/sample_output.txt
