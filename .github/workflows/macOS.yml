@@ -34,10 +34,14 @@ jobs:
 
     - name: Test the program and collect output
       run: |
-        echo frog
-        #cd build/bin/ubuntu_fetcher.app/Contents && ./ubuntu_fetcher --list-releases > sample_output.txt && cd ../../../..
+        cd build/Mac && ./ubuntu_fetcher --list-releases > sample_output.txt && cd ../..
 
     - uses: actions/upload-artifact@v4
       with:
-        name: artifacts_macOS
-        path: build
+        name: macOS_executable
+        path: build/Mac/ubuntu_fetcher
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: macOS_sample_output
+        path: build/Mac/sample_output.txt
