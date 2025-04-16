@@ -23,6 +23,10 @@ jobs:
         uname -a
         g++ --version | grep g++
 
+    - name: Install dependencies libcurl
+      run: |
+        sudo apt-get install libcurl4-openssl-dev
+
     - name: Run CMake
       run: |
         cd build && ./build_Linux.sh && cd ..
