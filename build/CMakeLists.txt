@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(CURL REQUIRED)
-find_package(json-c REQUIRED)
+find_package(JSON-C REQUIRED)
 
 add_executable(ubuntu_fetcher
     ../main.cpp
