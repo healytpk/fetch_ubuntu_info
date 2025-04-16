@@ -15,7 +15,7 @@
 #include <utility>              // forward
 #include <vector>               // vector
 #include <curl/curl.h>          // curl_easy_init
-#include <json-c/json.h>        // json_tokener_parse
+#include <json.h>               // json_tokener_parse
 #include "Auto.h"               // The 'Auto' macro
 
 using std::runtime_error;
