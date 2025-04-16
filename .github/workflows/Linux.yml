@@ -23,9 +23,9 @@ jobs:
         uname -a
         g++ --version | grep g++
 
-    - name: Install dependencies libcurl
+    - name: Install dependencies CURL, JSON-C
       run: |
-        sudo apt-get install libcurl4-openssl-dev
+        sudo apt-get install libcurl4-openssl-dev libjson-c-dev
 
     - name: Run CMake
       run: |
