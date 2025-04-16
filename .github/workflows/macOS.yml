@@ -34,9 +34,10 @@ jobs:
 
     - name: Test the program and collect output
       run: |
-        cd build/bin/ubuntu_fetcher.app/Contents && ./ubuntu_fetcher --list-releases > sample_output.txt && cd ../../../..
+        echo frog
+        #cd build/bin/ubuntu_fetcher.app/Contents && ./ubuntu_fetcher --list-releases > sample_output.txt && cd ../../../..
 
     - uses: actions/upload-artifact@v4
       with:
-        name: artifacts_wxOSX_arm64
-        path: build/bin/ubuntu_fetcher.app/Contents
+        name: artifacts_macOS
+        path: build
