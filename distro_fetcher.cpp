@@ -11,7 +11,6 @@
 #include <string>               // string, to_string
 #include <sstream>              // stringstream
 #include <thread>               // this_thread::sleep_for
-#include <type_traits>          // is_same, remove_reference
 #include <utility>              // forward
 #include <vector>               // vector
 #include <curl/curl.h>          // curl_easy_init
@@ -108,7 +107,7 @@ static bool HasDateExpired(char const *const str_date) noexcept
     return true;
 }
 
-vector<string> DistroFetcher::GetSupportedReleases(unsigned const max_count) const noexcept(false)
+vector<string> DistroFetcher::GetSupportedReleases(size_t const max_count) const noexcept(false)
 {
     string const json_text = FetchJson();
 

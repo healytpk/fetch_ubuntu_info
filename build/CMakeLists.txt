@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}" ${CMAKE_MODULE_PATH})
 
-find_package(CURL REQUIRED)
+find_package(CURL   REQUIRED)
 find_package(JSON-C REQUIRED)
 
 add_executable(ubuntu_fetcher
