@@ -19,8 +19,8 @@ jobs:
     - name: Run CMake
       run: |
         cd build
-        chmod +x ./cmAppleMac.sh
-        ./cmAppleMac.sh
+        chmod +x ./build_macOS.sh
+        ./build_macOS.sh
         cd ..
 
     - name: Run GNU Make with GNU compiler

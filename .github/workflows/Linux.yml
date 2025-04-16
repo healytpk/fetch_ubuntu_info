@@ -25,7 +25,7 @@ jobs:
 
     - name: Run CMake
       run: |
-        cd build && ./cmLinux.sh && cd ..
+        cd build && ./build_Linux.sh && cd ..
 
     - name: Run GNU Make with GNU compiler
       run: |
