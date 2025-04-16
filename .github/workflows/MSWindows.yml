@@ -28,6 +28,14 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
+    - name: Clone and bootstrap vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+
+    - name: Install libcurl via vcpkg
+      run: .\vcpkg\vcpkg install curl:x64-windows
+
     - name: Execute CMake
       run: cd build && cmd /c build_MSWindows.bat && cd ..
 
