@@ -15,17 +15,8 @@
 #include <utility>              // forward
 #include <vector>               // vector
 #include <curl/curl.h>          // curl_easy_init
+#include <json-c/json.h>        // json_tokener_parse
 #include "Auto.h"               // The 'Auto' macro
-
-#if 0
-#   include <json-c/json.h>        // json_object
-#endif
-
-#if 0
-#include <iostream> // --------------------------------------- Remove this
-using std::cout;
-using std::endl;
-#endif
 
 using std::runtime_error;
 using std::size_t;
@@ -119,7 +110,6 @@ static bool HasDateExpired(char const *const str_date) noexcept
 
 vector<string> DistroFetcher::GetSupportedReleases(unsigned const max_count) const noexcept(false)
 {
-#if 0
     string const json_text = FetchJson();
 
     json_object *const root = json_tokener_parse(json_text.c_str());
@@ -197,23 +187,6 @@ vector<string> DistroFetcher::GetSupportedReleases(unsigned const max_count) con
     if ( releases.size() > max_count ) releases.resize(max_count);
 
     return releases;
-
-#else
-
-    (void)max_count;
-
-    vector<string> releases;
-    releases.emplace_back("2025-04-03     24.04     Noble         LTS");
-    releases.emplace_back("2025-04-01     20.04     Focal         LTS");
-    releases.emplace_back("2025-03-27     24.04     Noble         LTS");
-    releases.emplace_back("2025-03-27     22.04     Jammy         LTS");
-    releases.emplace_back("2025-03-25     20.04     Focal         LTS");
-    releases.emplace_back("2025-03-13     24.04     Noble         LTS");
-    releases.emplace_back("2025-03-05     24.10     Oracular");
-    releases.emplace_back("2025-03-05     22.04     Jammy         LTS");
-    return releases;
-
-#endif
 }
 
 string DistroFetcher::GetCurrentLTSVersion(void) const noexcept(false)
@@ -228,7 +201,6 @@ string DistroFetcher::GetCurrentLTSVersion(void) const noexcept(false)
 
 string DistroFetcher::GetDisk1Sha256(string_view const date) const noexcept(false)
 {
-#if 0
     string digest = "unknown";
 
     string release(date);
@@ -286,8 +258,4 @@ string DistroFetcher::GetDisk1Sha256(string_view const date) const noexcept(fals
     }
 
     return digest;
-#else
-    (void)date;
-    return "9208750752bc2ad2523f23da";
-#endif
 }
