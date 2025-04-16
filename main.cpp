@@ -1,13 +1,13 @@
 #include <cstdio>               // puts
 #include <cstdlib>              // exit, EXIT_FAILURE
 #include <cstring>              // strcmp
-#include <iostream>             // cout, cerr, endl
+#include <exception>            // exception
+#include <iostream>             // cout, endl
 #include <string>               // string
 #include "distro_fetcher.hpp"   // DistroFetcher
 
 using std::string;
 using std::cout;
-using std::cerr;
 using std::endl;
 
 void ShowHelp(char const *const argv0, int const exit_code) noexcept
@@ -30,7 +30,7 @@ void ShowHelp(char const *const argv0, int const exit_code) noexcept
 
 constexpr char url[] = "https://cloud-images.ubuntu.com/releases/streams/v1/com.ubuntu.cloud:released:download.json";
 
-int main(int const argc, char **const argv)
+int main_proper(int const argc, char **const argv)
 {
     using std::strcmp;
 
@@ -65,3 +65,22 @@ int main(int const argc, char **const argv)
 
     ShowHelp(argv[0], EXIT_FAILURE);
 }
+
+int main(int const argc, char **const argv)
+{
+    try
+    {
+        return main_proper(argc, argv);
+    }
+    catch (std::exception const &e)
+    {
+        cout << "Error : Unhandled Exception : " << e.what() << endl;
+    }
+    catch (...)
+    {
+        cout << "Error : Unhandled Exception : Unknown\n";
+    }
+
+    return EXIT_FAILURE;
+}
+
