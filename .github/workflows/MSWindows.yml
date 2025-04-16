@@ -29,7 +29,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Execute CMake
-      run: cd build && cm.bat && cd ..
+      run: cd build && cmd /c cm.bat && cd ..
 
     - name: Run MSBuild
       run: |
