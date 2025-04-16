@@ -31,7 +31,11 @@ jobs:
       run: |
         cd build/LinuxRelease && make && cd ../..
 
+    - name: Test the program and collect output
+      run: |
+        cd build/LinuxRelease && ./ubuntu_fetcher --list-releases > sample_output.txt && cd ../..
+
     - uses: actions/upload-artifact@v4
       with:
         name: artifacts_Linux_x86_64
-        path: build/LinuxRelease/ubuntu_fetcher
+        path: build/LinuxRelease
