@@ -16,6 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install the JSON-C library
+      run: brew install json-c
+
     - name: Run CMake
       run: |
         cd build
