@@ -37,7 +37,7 @@ jobs:
 
     - name: Test the program and collect output
       run: |
-        cd build\Win\Debug && ubuntu_fetcher.exe --list-releases > sample_output.txt && cd ..\..\..
+        cd build\Win\Debug && cmd /c ubuntu_fetcher.exe --list-releases > sample_output.txt && cd ..\..\..
 
     - uses: actions/upload-artifact@v4
       with:
