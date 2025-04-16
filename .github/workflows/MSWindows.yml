@@ -36,6 +36,9 @@ jobs:
     - name: Install libcurl via vcpkg
       run: .\vcpkg\vcpkg install curl:x64-windows
 
+    - name: Install libjson-c via vcpkg
+      run: .\vcpkg\vcpkg install json-c:x64-windows
+
     - name: Execute CMake
       run: cd build && cmd /c build_MSWindows.bat && cd ..
 

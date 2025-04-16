@@ -6,8 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(CURL REQUIRED)
-#find_package(PkgConfig REQUIRED)
-#pkg_check_modules(JSON_C REQUIRED json-c)
+find_package(json-c REQUIRED)
 
 add_executable(ubuntu_fetcher
     ../main.cpp
@@ -18,11 +17,13 @@ target_include_directories(ubuntu_fetcher
     PRIVATE
     ../
     ${CURL_INCLUDE_DIRS}
-    #${JSON_C_INCLUDE_DIRS}
+    ${JSON-C_INCLUDE_DIRS}
 )
 
 target_link_libraries(ubuntu_fetcher
     PRIVATE
     ${CURL_LIBRARIES}
-    #${JSON_C_LIBRARIES}
+    ${JSON-C_LIBRARIES}
 )
+
+target_compile_definitions(ubuntu_fetcher PRIVATE JSON_STATIC)
